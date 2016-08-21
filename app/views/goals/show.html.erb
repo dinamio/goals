@@ -1,0 +1,17 @@
+<div class="container">
+ <hr>
+<div class="row">
+            <%@goals.each do |goal|%>
+            <div class="col-sm-4">
+            <%if !goal.image.url.ends_with?("missing.png")%>
+            	<%=image_tag goal.image(:medium), class: "img-circle img-responsive img-center" + (' grayscale' unless goal.is_passed).to_s %>
+            <%else%>
+            	<img class="img-circle img-responsive img-center" src="http://placehold.it/300x300" alt="">
+            <%end%>
+                <h2><%=goal.text%></h2>
+                <%=link_to 'Редактировать', edit_goal_path(goal), html_options = {class: "btn btn-primary"} %>
+            </div>
+            <%end%>
+            
+        </div>
+        </div>
