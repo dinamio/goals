@@ -43,7 +43,11 @@
             <%@goals.each_with_index do |goal,index|%>
             <%='<div class="row">'.html_safe if index%3==0%>
             <div class="col-sm-4">
+                <%if !goal.image.url.ends_with?("missing.png")%>
+                <%=image_tag goal.image(:medium), class: "img-circle img-responsive img-center"%>
+                <%else%>
                 <img class="img-circle img-responsive img-center" src="http://placehold.it/300x300" alt="">
+            <%end%>
                 <h2><%=goal.text%></h2>
             </div>
             <%='</div>'.html_safe  if index%3==2%>
