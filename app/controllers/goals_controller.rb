@@ -1,15 +1,15 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: [:edit, :update, :destroy]
+  before_action :set_goal, only: [:edit, :update, :destroy, :mark_as_done]
 
   # GET /goals
   # GET /goals.json
   def index
-    @goals = Goal.all
+    @goals = Goal.all.sample(6)
   end
 
   # GET /my_goals
   def show
-    @goals = Goal.all
+    @goals = Goal.where(user: current_user)
   end
 
   # GET /goals/new
@@ -25,6 +25,7 @@ class GoalsController < ApplicationController
   # POST /goals.json
   def create
     @goal = Goal.new(goal_params)
+    @goal.user = current_user
 
     respond_to do |format|
       if @goal.save
@@ -58,6 +59,19 @@ class GoalsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to goals_url, notice: 'Goal was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def mark_as_done
+    @goal.is_passed = true
+    respond_to do |format|
+      if @goal.save
+        format.html { redirect_to goals_show_path, notice: 'Goal was successfully created.' }
+        format.json { render :show, status: :created, location: @goal }
+      else
+        format.html { render :new }
+        format.json { render json: @goal.errors, status: :unprocessable_entity }
+      end
     end
   end
 

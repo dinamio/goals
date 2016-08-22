@@ -16,11 +16,20 @@
                     <li>
                         <%=link_to 'Главная', goals_path%>
                     </li>
+                    <% if user_signed_in? %>
                     <li>
                       <%=link_to 'Мои цели', goals_show_path%>
                     </li>
                     <li>
                       <%=link_to 'Добавить цель', new_goal_path%>
+                    </li>
+                    <%end%>
+                    <li>
+                    <% if user_signed_in? %>
+                      <%=link_to 'Выйти',  destroy_user_session_path, :method => :delete%>
+                    <%else%>
+                      <%=link_to 'Войти\Зарегистрироваться', new_user_session_url%>
+                        <%end%>
                     </li>
                 </ul>
             </div>

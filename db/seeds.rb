@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+goals = Goal.all
+user = User.find(1)
+goals.each do |goal|
+	if (goal.user == nil) 
+		goal.user=user
+		goal.save
+	end
+end

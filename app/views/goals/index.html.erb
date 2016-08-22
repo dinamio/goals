@@ -22,9 +22,15 @@
                 <h2>Что я здесь делаю?</h2>
                 <p>Постановке целей в наше время уделяют очень много времени, и не зря. Если ты не знаешь в какую сторону двигаться, то в любом случае придешь не туда.</p>
                 <p>Сядьте и потратьте пару часов времени на постановку целей на жизнь. Будьте изобретательны и рисковы. Помечайте выполненные цели и делитесь своим прогрессом с друзьями!</p>
+                <p>Цель помечается серым, если она не выполнена и приобретает краски после выполнения. Давайте делать нашу жизнь красочней!</p>
                 <p>
-                    <a class="btn btn-default btn-lg" href="#">Начать использование &raquo;</a>
-                </p>
+                <% if user_signed_in? %>
+                      <%=link_to 'Начать использование &raquo;'.html_safe, goals_show_path , :class =>  "btn btn-default btn-lg" %>
+                    <%else%>
+                      <%=link_to 'Начать использование &raquo;'.html_safe, new_user_session_url, :class => "btn btn-default btn-lg"%>
+                        <%end%>
+                
+                                </p>
             </div>
             
         </div>
@@ -33,12 +39,14 @@
         <hr>
 
         <div class="row">
-            <%@goals.each do |goal|%>
+            <h1>Цели других людей</h1>
+            <%@goals.each_with_index do |goal,index|%>
+            <%='<div class="row">'.html_safe if index%3==0%>
             <div class="col-sm-4">
                 <img class="img-circle img-responsive img-center" src="http://placehold.it/300x300" alt="">
                 <h2><%=goal.text%></h2>
-                <p>These marketing boxes are a great place to put some information. These can contain summaries of what the company does, promotional information, or anything else that is relevant to the company. These will usually be below-the-fold.</p>
             </div>
+            <%='</div>'.html_safe  if index%3==2%>
             <%end%>
             
         </div>
@@ -50,7 +58,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Jimmy 2016</p>
                 </div>
             </div>
             <!-- /.row -->

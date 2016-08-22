@@ -1,7 +1,11 @@
 <div class="container">
  <hr>
 <div class="row">
-            <%@goals.each do |goal|%>
+<%if @goals.empty? %>
+ <h2> Вы не добавили еще ни одной цели</h2>
+<%end%>
+            <%@goals.each_with_index do |goal,index|%>
+            <%='<div class="row">'.html_safe if index%3==0%>
             <div class="col-sm-4">
             <%if !goal.image.url.ends_with?("missing.png")%>
             	<%=image_tag goal.image(:medium), class: "img-circle img-responsive img-center" + (' grayscale' unless goal.is_passed).to_s %>
@@ -10,8 +14,12 @@
             <%end%>
                 <h2><%=goal.text%></h2>
                 <%=link_to 'Редактировать', edit_goal_path(goal), html_options = {class: "btn btn-primary"} %>
+                <%if !goal.is_passed%>
+                <%=link_to 'Выполнить', mark_goal_path(goal), :method => :post, class: "btn btn-success" %>
+                <%end%>
             </div>
+            <%='</div>'.html_safe  if index%3==2%>
             <%end%>
             
-        </div>
-        </div>
+</div>
+</div>
